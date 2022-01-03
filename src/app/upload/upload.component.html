@@ -1,0 +1,34 @@
+<div class="container">
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label> 餐廳名稱 </mat-label>
+    <input matInput (change)="getResturantName($event)" />
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label> 留下評論 </mat-label>
+    <textarea matInput (change)="getResturantComment($event)"></textarea>
+  </mat-form-field>
+  <div class="d-flex">
+    <button type="button" mat-raised-button (click)="fileInput.click()">
+      選擇檔案
+    </button>
+    <input
+      hidden
+      (change)="onFileSelected()"
+      #fileInput
+      type="file"
+      id="file"
+    />
+    <p>{{ fileOnSelected }}</p>
+  </div>
+  <div class="d-flex">
+    <button mat-raised-button (click)="uploadFile()">確定上傳</button>
+    <p class="danger">{{ errorMsg }}</p>
+  </div>
+</div>
+
+<!-- 上傳之後的彈跳視窗 -->
+<ng-template #dialogTemplate>
+  <div mat-dialog-content>
+    <h1>{{ uploadResult }}</h1>
+  </div>
+</ng-template>

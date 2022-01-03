@@ -1,0 +1,43 @@
+@use "@angular/material" as mat;
+@include mat.core();
+
+$indigo-palette: (
+  50: #e8eaf6,
+  100: #c5cae9,
+  200: #9fa8da,
+  300: #7986cb,
+  // ... continues to 900
+  contrast:
+    (
+      50: rgba(black, 0.87),
+      100: rgba(black, 0.87),
+      200: rgba(black, 0.87),
+      300: white,
+      // ... continues to 900
+    ),
+);
+
+$red-palette: (
+  50: red,
+  contrast: (
+    50: red,
+  ),
+);
+
+$my-primary: mat.define-palette(mat.$indigo-palette, 50);
+$my-accent: mat.define-palette(mat.$indigo-palette, 100);
+$my-warn: mat.define-palette(mat.$red-palette);
+
+$my-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+      warn: $my-warn,
+    ),
+  )
+);
+
+@include mat.core-theme($my-theme);
+@include mat.button-theme($my-theme);
+@include mat.all-component-themes($my-theme);

@@ -1,0 +1,48 @@
+<mat-sidenav-container>
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    [(opened)]="opened"
+    class="h-100 position-fixed side-nav"
+  >
+    <ul>
+      <li>餐廳一</li>
+      <li>餐廳二</li>
+      <li>餐廳三</li>
+      <li>餐廳四</li>
+      <li>餐廳五</li>
+    </ul>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="d-flex align-items-center container">
+    <div class="d-flex align-center">
+      <button
+        mat-icon-button
+        class="icon"
+        aria-label="openSideNav"
+        (click)="sidenav.toggle()"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <mat-toolbar class="nav">
+      <span>吃什麼好</span>
+    </mat-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<div class="container mt-2">
+  <div class="text-primary bg-dark">最近吃過:</div>
+  <div class="row p-2">
+    <div class="card col-6 py-2" *ngFor="let review of reviews">
+      <div class="card__image__wrapper">
+        <img src="{{ review.imageLink }}" class="review__pic" />
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{ review.name }}</h5>
+        <p class="card-text">{{ review.comment }}</p>
+        <a href="#" class="btn btn-primary">看看評論</a>
+      </div>
+    </div>
+  </div>
+</div>
