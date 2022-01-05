@@ -1,24 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  AngularFirestore,
-  DocumentSnapshot,
-} from '@angular/fire/compat/firestore';
-import {
-  Chart,
-  ChartItem,
-  Point,
-  LinearScale,
-  BarController,
-  CategoryScale,
-  BarElement,
-} from 'chart.js';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
-import { Data } from './typing';
-
-Chart.register(LinearScale, BarController, BarElement, CategoryScale);
 
 @Component({
   selector: 'app-voting-bot',
@@ -95,18 +80,14 @@ export class VotingBotComponent implements OnInit {
   }
 
   async getReview() {
-    await this.afs
-      .collection('review')
-      .ref.get()
-      .then((docs) => {
-        docs.forEach((element) => {
-          const data = element.data();
-          this.reviews.push({
-            data,
-            id: element.id,
-          });
-        });
+    const result = await this.afs.collection('review').ref.get();
+    result.forEach((element) => {
+      const data = element.data();
+      this.reviews.push({
+        data,
+        id: element.id,
       });
+    });
   }
 
   pushArr() {
