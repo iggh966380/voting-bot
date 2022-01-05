@@ -73,8 +73,8 @@ export class VotingBotComponent implements OnInit {
 
   opened: boolean = false;
   reviews: any[] = [];
-  public data: number[] = [];
-  public labels: string[] = [];
+  public data: string[] | number[] = [];
+  public labels: string[] | number[] = [];
   public barChartData: ChartData<'bar'> = {
     labels: [],
     datasets: [],
@@ -84,10 +84,9 @@ export class VotingBotComponent implements OnInit {
 
   async ngOnInit() {
     await this.getReview();
-    // this.updateData();
-    // const [resName, resLike] = this.updateData();
-    // this.labels = resName;
-    // this.data = resLike;
+    const [resName, resLike] = this.pushArr();
+    this.labels = resName;
+    this.data = resLike;
     this.initChart();
   }
 
@@ -110,6 +109,16 @@ export class VotingBotComponent implements OnInit {
       });
   }
 
+  pushArr() {
+    const resName: string[] = [];
+    const resLike: number[] = [];
+    for (let index of this.reviews) {
+      resName.push(index.data.name);
+      resLike.push(index.data.like);
+    }
+    return [resName, resLike];
+  }
+
   async addLike(event: any) {
     let targetIndex = event.path[2].attributes[2].value;
     const data = this.getReviewData();
@@ -122,47 +131,28 @@ export class VotingBotComponent implements OnInit {
       })
     );
     this.updateData(targetIndex);
-
-    console.log('123');
-    // const [resName, resLike] = this.updateData();
-    // console.log(resLike);
-    // this.labels = resName;
-    // this.data = resLike;
-    // const update = this.updateChart(resLike);
-    // update;
   }
 
   initChart() {
     this.barChartData = {
       labels: this.labels,
-      datasets: [{ data: this.data, label: '# for votes' }],
+      datasets: [{ data: <number[]>this.data, label: '# for votes' }],
     };
     return this.barChartData;
   }
 
-  updateData(index: number) {
-    let newData;
+  async updateData(index: number) {
+    let newData: number[] = [];
     this.afs
       .collection('review')
       .snapshotChanges()
       .subscribe((data: any) => {
         this.reviews[index].data.like = data[index].payload.doc.data().like;
         for (let index of data) {
-          const snapshotData = index.payload.doc.data();
-          newData = snapshotData.map((element: any) => {
-            return element;
-          });
+          newData.push(index.payload.doc.data().like);
         }
+        this.updateChart(newData);
       });
-    console.log(newData);
-    // const data = this.getReviewData();
-    // let resName = [];
-    // let resLike = [];
-    // for (let ele of data) {
-    //   resName.push(ele.data.name);
-    //   resLike.push(ele.data.like);
-    // }
-    // return [resName, resLike];
   }
 
   public updateChart(value: any): void {
