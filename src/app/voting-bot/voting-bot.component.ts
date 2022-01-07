@@ -42,9 +42,7 @@ export class VotingBotComponent implements OnInit {
   }: {
     event: MouseEvent;
     active: {}[];
-  }): void {
-    console.log(event, active);
-  }
+  }): void {}
 
   public chartHovered({
     event,
@@ -52,9 +50,7 @@ export class VotingBotComponent implements OnInit {
   }: {
     event: MouseEvent;
     active: {}[];
-  }): void {
-    console.log(event, active);
-  }
+  }): void {}
 
   opened: boolean = false;
   reviews: any[] = [];
@@ -64,6 +60,8 @@ export class VotingBotComponent implements OnInit {
     labels: [],
     datasets: [],
   };
+  searchResult: boolean = false;
+  resultList: any = [];
 
   constructor(private afs: AngularFirestore) {}
 
@@ -124,16 +122,12 @@ export class VotingBotComponent implements OnInit {
 
   async updateData(index: number) {
     let newData: number[] = [];
-    this.afs
-      .collection('review')
-      .snapshotChanges()
-      .subscribe((data: any) => {
-        this.reviews[index].data.like = data[index].payload.doc.data().like;
-        for (let index of data) {
-          newData.push(index.payload.doc.data().like);
-        }
-        this.updateChart(newData);
-      });
+    const result = await this.afs.collection('review').ref.get();
+    result.forEach((data: any) => {
+      return newData.push(data.data().like);
+    });
+    this.reviews[index].data.like = newData[index];
+    this.updateChart(newData);
   }
 
   public updateChart(value: any): void {
@@ -142,4 +136,42 @@ export class VotingBotComponent implements OnInit {
 
     this.chart?.update();
   }
+
+  getResNameArr() {
+    let name: string[] = [];
+    this.reviews.forEach((data) => {
+      name.push(data.data.name);
+    });
+    return name;
+  }
+
+  userArr: string[] = [];
+  getUserInput(event: any): any {
+    let idx: any = [];
+    if (event.data) {
+      this.searchResult = true;
+      const result = this.getResNameArr();
+      const arr = (query: string) => {
+        return result.filter((el) => {
+          return el.toLowerCase().indexOf(query.toLocaleLowerCase()) > -1;
+        });
+      };
+      const index = arr(event.target.value);
+      for (let element of index) {
+        result.forEach((data) => {
+          if (element === data) {
+            idx.push(result.indexOf(data));
+          }
+        });
+      }
+      this.resultList = [];
+      idx.forEach((index: number) => {
+        this.resultList.push(this.reviews[index]);
+      });
+    } else {
+      this.resultList = [];
+    }
+  }
+
+  reRenderView() {}
 }

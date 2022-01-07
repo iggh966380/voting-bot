@@ -6,11 +6,9 @@
     class="h-100 position-fixed side-nav"
   >
     <ul>
-      <li>餐廳一</li>
-      <li>餐廳二</li>
-      <li>餐廳三</li>
-      <li>餐廳四</li>
-      <li>餐廳五</li>
+      <li *ngFor="let res of reviews">
+        {{ res.data.name }}
+      </li>
     </ul>
   </mat-sidenav>
 
@@ -33,7 +31,7 @@
 
 <div class="container mt-2">
   <div class="text-primary bg-dark">最近吃過:</div>
-  <div class="row p-2">
+  <div class="row row-cols-2 g-2 p-2">
     <div
       class="card col-6 py-2"
       *ngFor="let review of reviews; index as i"
@@ -56,8 +54,6 @@
   </div>
 </div>
 
-<!-- <canvas id="review-chart" width="400" height="400"></canvas> -->
-
 <div class="container">
   <div class="d-block">
     <canvas
@@ -68,5 +64,31 @@
       [type]="barChartType"
     >
     </canvas>
+  </div>
+</div>
+
+<form action="#">
+  <input type="text" (input)="getUserInput($event)" required />
+</form>
+
+<div *ngIf="searchResult">
+  <div *ngFor="let item of resultList">
+    <div class="row row-cols-2 g-2 p-2">
+      <div class="card col-6 py-2">
+        <div class="card__image__wrapper">
+          <img
+            src="{{ item.data.imageLink }}"
+            class="review__pic card-img-top"
+          />
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ item.data.name }}</h5>
+          <p class="card-text">{{ item.data.comment }}</p>
+          <a href="#" class="btn btn-primary">看看評論</a>
+          <div class="btn btn-primary" (click)="addLike($event)">讚</div>
+          <div>{{ item.data.like }}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
