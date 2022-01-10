@@ -1,4 +1,4 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 @include mat.core();
 
 $indigo-palette: (
@@ -24,7 +24,7 @@ $red-palette: (
   ),
 );
 
-$my-primary: mat.define-palette(mat.$indigo-palette, 50);
+$my-primary: mat.define-palette(mat.$indigo-palette, 300);
 $my-accent: mat.define-palette(mat.$indigo-palette, 100);
 $my-warn: mat.define-palette(mat.$red-palette);
 

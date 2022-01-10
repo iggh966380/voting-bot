@@ -46,7 +46,7 @@
       <div class="card-body">
         <h5 class="card-title">{{ review.data.name }}</h5>
         <p class="card-text">{{ review.data.comment }}</p>
-        <a href="#" class="btn btn-primary">看看評論</a>
+        <a class="btn btn-primary" (click)="sendUserId($event)">看看評論</a>
         <div class="btn btn-primary" (click)="addLike($event)">讚</div>
         <div>{{ review.data.like }}</div>
       </div>
@@ -67,28 +67,27 @@
   </div>
 </div>
 
-<form action="#">
-  <input type="text" (input)="getUserInput($event)" required />
-</form>
+<div class="container">
+  <form action="#">
+    <input type="text" (input)="getUserInput($event)" required />
+  </form>
+</div>
 
-<div *ngIf="searchResult">
-  <div *ngFor="let item of resultList">
-    <div class="row row-cols-2 g-2 p-2">
-      <div class="card col-6 py-2">
-        <div class="card__image__wrapper">
-          <img
-            src="{{ item.data.imageLink }}"
-            class="review__pic card-img-top"
-          />
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">{{ item.data.name }}</h5>
-          <p class="card-text">{{ item.data.comment }}</p>
-          <a href="#" class="btn btn-primary">看看評論</a>
-          <div class="btn btn-primary" (click)="addLike($event)">讚</div>
-          <div>{{ item.data.like }}</div>
-        </div>
+<div *ngIf="searchResult" class="container">
+  <div class="row row-cols-2 g-2 p-2">
+    <div *ngFor="let item of resultList" class="card col-6 py-2">
+      <div class="card__image__wrapper">
+        <img src="{{ item.data.imageLink }}" class="review__pic card-img-top" />
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{ item.data.name }}</h5>
+        <p class="card-text">{{ item.data.comment }}</p>
+        <a href="#" class="btn btn-primary">看看評論</a>
+        <div class="btn btn-primary" (click)="addLike($event)">讚</div>
+        <div>{{ item.data.like }}</div>
       </div>
     </div>
   </div>
 </div>
+
+<app-post [userId]="userId"></app-post>

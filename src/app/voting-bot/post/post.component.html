@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="container">
+    <div>{{ fullArticle.title }}</div>
+    <div>{{ fullArticle.comment }}</div>
+  </div>
+
+  <button class="btn btn-primary">編輯文章</button>
+  <form action="#">
+    <mat-form-field class="w-100">
+      <mat-label class="h1">標題</mat-label>
+      <input
+        matInput
+        type="text"
+        required
+        value="{{ fullArticle.title }}"
+        class="h1 mb-0"
+      />
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <mat-label class="h1">內容</mat-label>
+      <textarea matInput class="h1 w-100" cols="30" rows="10" required
+        >{{ fullArticle.comment }}
+      </textarea>
+    </mat-form-field>
+    <button mat-raised-button type="submit" color="primary">確定</button>
+  </form>
+</div>

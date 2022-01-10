@@ -62,6 +62,7 @@ export class VotingBotComponent implements OnInit {
   };
   searchResult: boolean = false;
   resultList: any = [];
+  userId: string = '';
 
   constructor(private afs: AngularFirestore) {}
 
@@ -173,5 +174,8 @@ export class VotingBotComponent implements OnInit {
     }
   }
 
-  reRenderView() {}
+  sendUserId(event: any) {
+    let targetIndex = event.path[2].attributes[2].value;
+    this.userId = this.reviews[targetIndex].id;
+  }
 }
