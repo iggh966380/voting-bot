@@ -10,7 +10,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule, BUCKET } from '@angular/fire/compat/storage';
-import { UploadComponent } from './upload/upload.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -18,7 +17,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { VotingBotModule } from './voting-bot/voting-bot.module';
 
 @NgModule({
-  declarations: [AppComponent, UploadComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

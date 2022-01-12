@@ -13,9 +13,16 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { SearchlistComponent } from './searchlist/searchlist.component';
+import { UploadComponent } from './upload/upload.component';
 
 @NgModule({
-  declarations: [VotingBotComponent, PostComponent],
+  declarations: [
+    VotingBotComponent,
+    PostComponent,
+    UploadComponent,
+    SearchlistComponent,
+  ],
   imports: [
     CommonModule,
     VotingBotRoutingModule,

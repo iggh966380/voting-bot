@@ -14,14 +14,37 @@
         required
         value="{{ fullArticle.title }}"
         class="h1 mb-0"
+        id="updatedTitle"
       />
     </mat-form-field>
     <mat-form-field class="w-100">
       <mat-label class="h1">內容</mat-label>
-      <textarea matInput class="h1 w-100" cols="30" rows="10" required
+      <textarea
+        matInput
+        class="h1 w-100"
+        cols="30"
+        rows="10"
+        id="updatedComment"
+        required
         >{{ fullArticle.comment }}
       </textarea>
     </mat-form-field>
-    <button mat-raised-button type="submit" color="primary">確定</button>
   </form>
+  <button
+    mat-raised-button
+    type="submit"
+    id="submit-btn"
+    color="primary"
+    (click)="sendChange()"
+  >
+    確定
+  </button>
+  <button
+    mat-raised-button
+    type="submit"
+    color="primary"
+    (click)="deletePost()"
+  >
+    刪除
+  </button>
 </div>
